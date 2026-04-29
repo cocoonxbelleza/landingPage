@@ -728,11 +728,18 @@
       return;
     }
 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAZaugOyXehxQdLHd2Spv8GC_IZxescgFuW4pHJ-gt8wmGJGqG8l3TGmG5mvSkU2vK/exec';
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ prenom, nom, email, tel, cp }),
+    });
+
     document.getElementById('form-container').style.display = 'none';
     const ty = document.getElementById('thank-you');
     ty.classList.add('show');
     ty.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
+  
 
   // Smooth scroll pour le bouton hero
   document.querySelector('.cta-btn').addEventListener('click', function(e) {
