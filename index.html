@@ -1,3 +1,4 @@
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -52,9 +53,12 @@ h1 em { font-style: italic; font-weight: 400; color: var(--moss); }
 .form-group { display: flex; flex-direction: column; gap: 8px; }
 .form-group.full { grid-column: 1 / -1; }
 label { font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--sage); }
-input { width: 100%; padding: 14px 16px; border: 1px solid rgba(122,140,110,0.3); background: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif; font-size: 14px; color: var(--text); outline: none; border-radius: 2px; transition: border-color 0.2s; }
-input:focus { border-color: var(--sage); background: #fff; }
+input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 14px 16px; border: 1px solid rgba(122,140,110,0.3); background: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif; font-size: 14px; color: var(--text); outline: none; border-radius: 2px; transition: border-color 0.2s; }
+input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus { border-color: var(--sage); background: #fff; }
 input::placeholder { color: #bbb; font-size: 13px; }
+.consent-box { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 12px; margin-top: 8px; }
+.consent-box input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; margin-top: 2px; accent-color: var(--moss); cursor: pointer; }
+.consent-box span { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
 .form-submit { margin-top: 28px; }
 .submit-btn { width: 100%; padding: 18px; background: var(--moss); color: #fff; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.3s; display: flex; align-items: center; justify-content: center; gap: 12px; }
 .submit-btn:hover { background: var(--earth); }
@@ -153,6 +157,10 @@ footer span { color: var(--sage-light); }
 <label for="cp">Code postal</label>
 <input type="text" id="cp" placeholder="75000" maxlength="5" />
 </div>
+<div class="consent-box">
+<input type="checkbox" id="consent" />
+<span>J'accepte de recevoir des conseils beauté naturelle et des exclusivités de Cocoon &amp; Belleza. Désinscription possible à tout moment.</span>
+</div>
 </div>
 <div class="form-submit">
 <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">
@@ -165,7 +173,7 @@ Télécharger gratuitement
 <div class="thank-you" id="thank-you">
 <div class="check">🌿</div>
 <h3>Merci, c'est tout bon !</h3>
-<p>Votre e-book <em>Douceur &amp; Vitalité</em> est en route.<br><br>Avec douceur et éclat,<br><strong>Cocoon &amp; Belleza</strong></p>
+<p>Votre e-book <em>Douceur &amp; Vitalité</em> arrive dans votre boite mail.<br><br>Avec douceur et éclat,<br><strong>Cocoon &amp; Belleza</strong></p>
 </div>
 </div>
 </section>
@@ -183,6 +191,7 @@ var nom = document.getElementById('nom').value.trim();
 var email = document.getElementById('email').value.trim();
 var tel = document.getElementById('tel').value.trim();
 var cp = document.getElementById('cp').value.trim();
+var consent = document.getElementById('consent').checked ? 'Oui' : 'Non';
 
 if (!prenom || !nom || !email || !tel || !cp) {
 alert('Merci de remplir tous les champs.');
@@ -203,6 +212,7 @@ formData.append('nom', nom);
 formData.append('email', email);
 formData.append('tel', tel);
 formData.append('cp', cp);
+formData.append('consent', consent);
 
 fetch(SCRIPT_URL, {
 method: 'POST',
