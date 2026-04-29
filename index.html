@@ -1,752 +1,231 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cocoon & Belleza – E-book Gratuit</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #f5f0e8;
-      --sage: #7a8c6e;
-      --sage-light: #a3b494;
-      --earth: #6b5240;
-      --earth-light: #c4a882;
-      --moss: #4a5c3f;
-      --white: #fefefe;
-      --text: #2e2a24;
-      --text-muted: #7a6f62;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Jost', sans-serif;
-      background-color: var(--cream);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 20% 80%, rgba(122,140,110,0.15) 0%, transparent 55%),
-        radial-gradient(ellipse at 80% 20%, rgba(196,168,130,0.12) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    /* Motif feuilles SVG en arrière-plan */
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 0; right: 0;
-      width: 45%;
-      height: 100%;
-      background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'%3E%3Cellipse cx='300' cy='100' rx='80' ry='40' fill='none' stroke='%237a8c6e' stroke-width='1' opacity='0.18' transform='rotate(-30 300 100)'/%3E%3Cellipse cx='350' cy='200' rx='60' ry='30' fill='none' stroke='%237a8c6e' stroke-width='1' opacity='0.12' transform='rotate(-20 350 200)'/%3E%3Cellipse cx='280' cy='300' rx='90' ry='45' fill='none' stroke='%234a5c3f' stroke-width='1' opacity='0.1' transform='rotate(-40 280 300)'/%3E%3Cellipse cx='360' cy='420' rx='70' ry='35' fill='none' stroke='%237a8c6e' stroke-width='1' opacity='0.15' transform='rotate(-15 360 420)'/%3E%3Cellipse cx='240' cy='500' rx='100' ry='50' fill='none' stroke='%234a5c3f' stroke-width='1' opacity='0.08' transform='rotate(-50 240 500)'/%3E%3C/svg%3E") no-repeat center/cover;
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 80px 60px 80px 80px;
-      position: relative;
-      z-index: 2;
-      animation: fadeInUp 0.9s ease both;
-    }
-
-    .hero-right {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px 40px;
-      position: relative;
-      z-index: 2;
-      animation: fadeInRight 0.9s ease 0.2s both;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 28px;
-    }
-    .tag::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1px;
-      background: var(--sage);
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.6rem, 4vw, 3.8rem);
-      font-weight: 300;
-      line-height: 1.15;
-      color: var(--earth);
-      margin-bottom: 12px;
-    }
-    h1 em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--moss);
-    }
-
-    .subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
-      font-style: italic;
-      color: var(--text-muted);
-      margin-bottom: 32px;
-      line-height: 1.6;
-    }
-
-    .hero-desc {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--text-muted);
-      max-width: 420px;
-      margin-bottom: 40px;
-    }
-
-    .pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 44px;
-    }
-    .pill {
-      font-size: 11px;
-      letter-spacing: 1px;
-      padding: 7px 16px;
-      border: 1px solid var(--sage-light);
-      border-radius: 50px;
-      color: var(--sage);
-      background: rgba(122,140,110,0.07);
-    }
-
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--moss);
-      color: #fff;
-      font-family: 'Jost', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 18px 40px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .cta-btn:hover { background: var(--earth); transform: translateY(-2px); }
-    .cta-btn svg { width: 16px; height: 16px; }
-
-    /* Livre ebook stylisé */
-    .ebook-visual {
-      position: relative;
-      width: 280px;
-    }
-
-    .ebook-cover {
-      width: 100%;
-      border-radius: 4px 12px 12px 4px;
-      box-shadow:
-        -6px 0 0 #c8b89a,
-        -10px 4px 30px rgba(0,0,0,0.18),
-        0 20px 60px rgba(74,92,63,0.2);
-      background: linear-gradient(145deg, #e8d5b8 0%, #d4c4a0 100%);
-      aspect-ratio: 0.67;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .ebook-cover::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--sage), var(--earth-light));
-    }
-
-    .ebook-cover::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(122,140,110,0.1) 0%, transparent 40%);
-    }
-
-    .ebook-icon {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .ebook-cover-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--earth);
-      text-align: center;
-      line-height: 1.3;
-      position: relative;
-      z-index: 1;
-      margin-bottom: 8px;
-    }
-
-    .ebook-cover-sub {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--text-muted);
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      margin-bottom: 20px;
-    }
-
-    .ebook-divider {
-      width: 40px;
-      height: 1px;
-      background: var(--sage-light);
-      margin: 0 auto 16px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .ebook-essences {
-      font-size: 0.65rem;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--sage);
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      line-height: 2;
-    }
-
-    .ebook-badge {
-      position: absolute;
-      top: -16px;
-      right: -16px;
-      width: 72px;
-      height: 72px;
-      background: var(--sage);
-      border-radius: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 1.4;
-      box-shadow: 0 4px 20px rgba(74,92,63,0.3);
-      animation: rotateBadge 8s linear infinite;
-    }
-
-    /* ── SECTION CONTENU ── */
-    .section-content {
-      background: var(--white);
-      padding: 100px 80px;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 72px;
-    }
-
-    .section-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3vw, 2.8rem);
-      font-weight: 300;
-      color: var(--earth);
-      margin-bottom: 16px;
-    }
-
-    .section-header p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-
-    .essences-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .essence-card {
-      padding: 28px 20px;
-      text-align: center;
-      border: 1px solid rgba(122,140,110,0.15);
-      transition: background 0.3s;
-    }
-    .essence-card:hover { background: rgba(122,140,110,0.05); }
-
-    .essence-emoji { font-size: 1.6rem; margin-bottom: 10px; }
-    .essence-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--earth);
-      margin-bottom: 6px;
-    }
-    .essence-benefit {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* ── FORMULAIRE ── */
-    .section-form {
-      background: linear-gradient(135deg, #eee8dc 0%, #e4ddd0 100%);
-      padding: 100px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .section-form::before {
-      content: '';
-      position: absolute;
-      bottom: -60px; right: -60px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(122,140,110,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .form-wrapper {
-      max-width: 560px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .form-header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .form-header .tag { justify-content: center; }
-    .form-header .tag::before { display: none; }
-    .form-header .tag::after {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1px;
-      background: var(--sage);
-    }
-
-    .form-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      font-weight: 300;
-      color: var(--earth);
-      margin-bottom: 12px;
-    }
-
-    .form-header p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.8;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .form-group.full { grid-column: 1 / -1; }
-
-    label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--sage);
-    }
-
-    input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid rgba(122,140,110,0.3);
-      background: rgba(255,255,255,0.7);
-      font-family: 'Jost', sans-serif;
-      font-size: 14px;
-      color: var(--text);
-      outline: none;
-      border-radius: 2px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    input:focus {
-      border-color: var(--sage);
-      background: #fff;
-    }
-    input::placeholder { color: #bbb; font-size: 13px; }
-
-    .form-submit {
-      margin-top: 28px;
-      text-align: center;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 18px;
-      background: var(--moss);
-      color: #fff;
-      font-family: 'Jost', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-    .submit-btn:hover { background: var(--earth); transform: translateY(-1px); }
-
-    .form-note {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 16px;
-      line-height: 1.6;
-    }
-
-    /* ── MERCI ── */
-    .thank-you {
-      display: none;
-      text-align: center;
-      padding: 60px 20px;
-      animation: fadeInUp 0.6s ease both;
-    }
-    .thank-you.show { display: block; }
-    .thank-you h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 300;
-      color: var(--earth);
-      margin-bottom: 16px;
-    }
-    .thank-you p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.8;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .thank-you .check {
-      font-size: 3rem;
-      margin-bottom: 24px;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--text);
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 32px;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
-    footer span { color: var(--sage-light); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInRight {
-      from { opacity: 0; transform: translateX(30px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes rotateBadge {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 60px 32px 40px; }
-      .hero-right { padding: 0 32px 60px; }
-      .hero::after { display: none; }
-      .section-content, .section-form { padding: 72px 32px; }
-      .essences-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 560px) {
-      .hero-left { padding: 48px 24px 32px; }
-      .hero-right { padding: 0 24px 48px; }
-      .ebook-visual { width: 220px; }
-      .section-content, .section-form { padding: 56px 24px; }
-      .essences-grid { grid-template-columns: repeat(2, 1fr); }
-      .form-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cocoon & Belleza – E-book Gratuit</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --cream: #f5f0e8; --sage: #7a8c6e; --sage-light: #a3b494; --earth: #6b5240; --earth-light: #c4a882; --moss: #4a5c3f; --white: #fefefe; --text: #2e2a24; --text-muted: #7a6f62; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Jost', sans-serif; background-color: var(--cream); color: var(--text); overflow-x: hidden; }
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(122,140,110,0.15) 0%, transparent 55%); pointer-events: none; }
+.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 60px 80px 80px; position: relative; z-index: 2; animation: fadeInUp 0.9s ease both; }
+.hero-right { display: flex; align-items: center; justify-content: center; padding: 60px 40px; position: relative; z-index: 2; animation: fadeInRight 0.9s ease 0.2s both; }
+.tag { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase; color: var(--sage); margin-bottom: 28px; }
+.tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--sage); }
+h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.6rem, 4vw, 3.8rem); font-weight: 300; line-height: 1.15; color: var(--earth); margin-bottom: 12px; }
+h1 em { font-style: italic; font-weight: 400; color: var(--moss); }
+.subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-style: italic; color: var(--text-muted); margin-bottom: 32px; }
+.hero-desc { font-size: 0.9rem; font-weight: 300; line-height: 1.8; color: var(--text-muted); max-width: 420px; margin-bottom: 40px; }
+.pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 44px; }
+.pill { font-size: 11px; letter-spacing: 1px; padding: 7px 16px; border: 1px solid var(--sage-light); border-radius: 50px; color: var(--sage); background: rgba(122,140,110,0.07); }
+.cta-btn { display: inline-flex; align-items: center; gap: 12px; background: var(--moss); color: #fff; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; padding: 18px 40px; border: none; cursor: pointer; text-decoration: none; transition: background 0.3s, transform 0.2s; }
+.cta-btn:hover { background: var(--earth); transform: translateY(-2px); }
+.ebook-visual { position: relative; width: 280px; }
+.ebook-cover { width: 100%; border-radius: 4px 12px 12px 4px; box-shadow: -6px 0 0 #c8b89a, -10px 4px 30px rgba(0,0,0,0.18), 0 20px 60px rgba(74,92,63,0.2); background: linear-gradient(145deg, #e8d5b8 0%, #d4c4a0 100%); aspect-ratio: 0.67; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; position: relative; overflow: hidden; }
+.ebook-cover::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--sage), var(--earth-light)); }
+.ebook-icon { font-size: 3rem; margin-bottom: 20px; position: relative; z-index: 1; }
+.ebook-cover-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--earth); text-align: center; line-height: 1.3; position: relative; z-index: 1; margin-bottom: 8px; }
+.ebook-cover-sub { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; font-style: italic; color: var(--text-muted); text-align: center; position: relative; z-index: 1; margin-bottom: 20px; }
+.ebook-divider { width: 40px; height: 1px; background: var(--sage-light); margin: 0 auto 16px; position: relative; z-index: 1; }
+.ebook-essences { font-size: 0.65rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sage); text-align: center; position: relative; z-index: 1; line-height: 2; }
+.ebook-badge { position: absolute; top: -16px; right: -16px; width: 72px; height: 72px; background: var(--sage); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-size: 9px; font-weight: 500; text-transform: uppercase; text-align: center; line-height: 1.4; box-shadow: 0 4px 20px rgba(74,92,63,0.3); }
+.section-content { background: var(--white); padding: 100px 80px; }
+.section-header { text-align: center; margin-bottom: 72px; }
+.section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 300; color: var(--earth); margin-bottom: 16px; }
+.section-header p { font-size: 0.9rem; color: var(--text-muted); max-width: 480px; margin: 0 auto; line-height: 1.8; }
+.essences-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; max-width: 900px; margin: 0 auto; }
+.essence-card { padding: 28px 20px; text-align: center; border: 1px solid rgba(122,140,110,0.15); transition: background 0.3s; }
+.essence-card:hover { background: rgba(122,140,110,0.05); }
+.essence-emoji { font-size: 1.6rem; margin-bottom: 10px; }
+.essence-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--earth); margin-bottom: 6px; }
+.essence-benefit { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+.section-form { background: linear-gradient(135deg, #eee8dc 0%, #e4ddd0 100%); padding: 100px 80px; position: relative; overflow: hidden; }
+.form-wrapper { max-width: 560px; margin: 0 auto; position: relative; z-index: 1; }
+.form-header { text-align: center; margin-bottom: 48px; }
+.form-header h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 300; color: var(--earth); margin-bottom: 12px; }
+.form-header p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group.full { grid-column: 1 / -1; }
+label { font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--sage); }
+input { width: 100%; padding: 14px 16px; border: 1px solid rgba(122,140,110,0.3); background: rgba(255,255,255,0.7); font-family: 'Jost', sans-serif; font-size: 14px; color: var(--text); outline: none; border-radius: 2px; transition: border-color 0.2s; }
+input:focus { border-color: var(--sage); background: #fff; }
+input::placeholder { color: #bbb; font-size: 13px; }
+.form-submit { margin-top: 28px; }
+.submit-btn { width: 100%; padding: 18px; background: var(--moss); color: #fff; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.3s; display: flex; align-items: center; justify-content: center; gap: 12px; }
+.submit-btn:hover { background: var(--earth); }
+.submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.form-note { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 16px; }
+.thank-you { display: none; text-align: center; padding: 60px 20px; }
+.thank-you.show { display: block; }
+.thank-you h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--earth); margin-bottom: 16px; }
+.thank-you p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; max-width: 400px; margin: 0 auto; }
+.check { font-size: 3rem; margin-bottom: 24px; }
+footer { background: var(--text); color: rgba(255,255,255,0.5); text-align: center; padding: 32px; font-size: 12px; letter-spacing: 1px; }
+footer span { color: var(--sage-light); }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; min-height: auto; } .hero-left { padding: 60px 32px 40px; } .hero-right { padding: 0 32px 60px; } .section-content, .section-form { padding: 72px 32px; } .essences-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .hero-left { padding: 48px 24px 32px; } .hero-right { padding: 0 24px 48px; } .ebook-visual { width: 220px; } .section-content, .section-form { padding: 56px 24px; } .form-grid { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
-<!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-left">
-    <span class="tag">@cocoon.x.belleza13 · Beauté naturelle</span>
-
-    <h1>Le Rituel d'Huiles<br><em>Précieuses</em><br>pour l'Âme<br>et le Corps</h1>
-    <p class="subtitle">Douceur &amp; Vitalité</p>
-
-    <p class="hero-desc">
-      12 huiles essentielles sélectionnées pour leurs vertus uniques — de la lavande apaisante à l'épinette noire revitalisante. Des recettes DIY simples pour nourrir votre peau, votre corps et votre esprit.
-    </p>
-
-    <div class="pills">
-      <span class="pill">✦ Aromathérapie</span>
-      <span class="pill">✦ Beauté naturelle</span>
-      <span class="pill">✦ Drainage lymphatique</span>
-      <span class="pill">✦ DIY</span>
-    </div>
-
-    <a href="#formulaire" class="cta-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      Recevoir mon e-book gratuit
-    </a>
-  </div>
-
-  <div class="hero-right">
-    <div class="ebook-visual">
-      <div class="ebook-cover">
-        <div class="ebook-icon">🌿</div>
-        <div class="ebook-cover-title">Le Rituel<br>d'Huiles Précieuses</div>
-        <div class="ebook-cover-sub">pour l'Âme et le Corps</div>
-        <div class="ebook-divider"></div>
-        <div class="ebook-essences">
-          Lavande · Citron · Romarin<br>
-          Gingembre · Basilic · Rose
-        </div>
-      </div>
-      <div class="ebook-badge">100%<br>Gratuit</div>
-    </div>
-  </div>
+<div class="hero-left">
+<span class="tag">@cocoon.x.belleza13 · Beauté naturelle</span>
+<h1>Le Rituel d'Huiles<br><em>Précieuses</em><br>pour l'Âme<br>et le Corps</h1>
+<p class="subtitle">Douceur &amp; Vitalité</p>
+<p class="hero-desc">12 huiles essentielles sélectionnées pour leurs vertus uniques. Des recettes DIY simples pour nourrir votre peau, votre corps et votre esprit.</p>
+<div class="pills">
+<span class="pill">✦ Aromathérapie</span>
+<span class="pill">✦ Beauté naturelle</span>
+<span class="pill">✦ Drainage lymphatique</span>
+<span class="pill">✦ DIY</span>
+</div>
+<a href="#formulaire" class="cta-btn">Recevoir mon e-book gratuit</a>
+</div>
+<div class="hero-right">
+<div class="ebook-visual">
+<div class="ebook-cover">
+<div class="ebook-icon">🌿</div>
+<div class="ebook-cover-title">Le Rituel<br>d'Huiles Précieuses</div>
+<div class="ebook-cover-sub">pour l'Âme et le Corps</div>
+<div class="ebook-divider"></div>
+<div class="ebook-essences">Lavande · Citron · Romarin<br>Gingembre · Basilic · Rose</div>
+</div>
+<div class="ebook-badge">100%<br>Gratuit</div>
+</div>
+</div>
 </section>
 
-<!-- ══ CONTENU ══ -->
 <section class="section-content">
-  <div class="section-header">
-    <h2>Ce que contient l'e-book</h2>
-    <p>12 huiles essentielles détaillées avec leurs bienfaits, recettes DIY et précautions d'usage.</p>
-  </div>
-
-  <div class="essences-grid">
-    <div class="essence-card">
-      <div class="essence-emoji">🍑</div>
-      <div class="essence-name">Abricot</div>
-      <div class="essence-benefit">Nourrissante &amp; adoucissante</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">💜</div>
-      <div class="essence-name">Lavande</div>
-      <div class="essence-benefit">Apaisante &amp; relaxante</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🌿</div>
-      <div class="essence-name">Romarin</div>
-      <div class="essence-benefit">Tonifiant &amp; stimulant</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🌱</div>
-      <div class="essence-name">Eucalyptus</div>
-      <div class="essence-benefit">Décongestionnant</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🍃</div>
-      <div class="essence-name">Tea Tree</div>
-      <div class="essence-benefit">Purifiant &amp; antibactérien</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🌬️</div>
-      <div class="essence-name">Menthe poivrée</div>
-      <div class="essence-benefit">Rafraîchissante</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🍋</div>
-      <div class="essence-name">Citron</div>
-      <div class="essence-benefit">Détoxifiant &amp; purifiant</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🫚</div>
-      <div class="essence-name">Gingembre</div>
-      <div class="essence-benefit">Stimulant digestif</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🍊</div>
-      <div class="essence-name">Pamplemousse</div>
-      <div class="essence-benefit">Drainant &amp; énergisant</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🌾</div>
-      <div class="essence-name">Basilic</div>
-      <div class="essence-benefit">Antispasmodique</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🌹</div>
-      <div class="essence-name">Rose musquée</div>
-      <div class="essence-benefit">Régénérante cutanée</div>
-    </div>
-    <div class="essence-card">
-      <div class="essence-emoji">🌲</div>
-      <div class="essence-name">Épinette noire</div>
-      <div class="essence-benefit">Tonique &amp; revitalisante</div>
-    </div>
-  </div>
+<div class="section-header">
+<h2>Ce que contient l'e-book</h2>
+<p>12 huiles essentielles détaillées avec leurs bienfaits, recettes DIY et précautions d'usage.</p>
+</div>
+<div class="essences-grid">
+<div class="essence-card"><div class="essence-emoji">🍑</div><div class="essence-name">Abricot</div><div class="essence-benefit">Nourrissante &amp; adoucissante</div></div>
+<div class="essence-card"><div class="essence-emoji">💜</div><div class="essence-name">Lavande</div><div class="essence-benefit">Apaisante &amp; relaxante</div></div>
+<div class="essence-card"><div class="essence-emoji">🌿</div><div class="essence-name">Romarin</div><div class="essence-benefit">Tonifiant &amp; stimulant</div></div>
+<div class="essence-card"><div class="essence-emoji">🌱</div><div class="essence-name">Eucalyptus</div><div class="essence-benefit">Décongestionnant</div></div>
+<div class="essence-card"><div class="essence-emoji">🍃</div><div class="essence-name">Tea Tree</div><div class="essence-benefit">Purifiant &amp; antibactérien</div></div>
+<div class="essence-card"><div class="essence-emoji">🌬️</div><div class="essence-name">Menthe poivrée</div><div class="essence-benefit">Rafraîchissante</div></div>
+<div class="essence-card"><div class="essence-emoji">🍋</div><div class="essence-name">Citron</div><div class="essence-benefit">Détoxifiant &amp; purifiant</div></div>
+<div class="essence-card"><div class="essence-emoji">🫚</div><div class="essence-name">Gingembre</div><div class="essence-benefit">Stimulant digestif</div></div>
+<div class="essence-card"><div class="essence-emoji">🍊</div><div class="essence-name">Pamplemousse</div><div class="essence-benefit">Drainant &amp; énergisant</div></div>
+<div class="essence-card"><div class="essence-emoji">🌾</div><div class="essence-name">Basilic</div><div class="essence-benefit">Antispasmodique</div></div>
+<div class="essence-card"><div class="essence-emoji">🌹</div><div class="essence-name">Rose musquée</div><div class="essence-benefit">Régénérante cutanée</div></div>
+<div class="essence-card"><div class="essence-emoji">🌲</div><div class="essence-name">Épinette noire</div><div class="essence-benefit">Tonique &amp; revitalisante</div></div>
+</div>
 </section>
 
-<!-- ══ FORMULAIRE ══ -->
 <section class="section-form" id="formulaire">
-  <div class="form-wrapper">
+<div class="form-wrapper">
+<div id="form-container">
+<div class="form-header">
+<span class="tag">Accès gratuit &amp; immédiat</span>
+<h2>Recevez votre e-book</h2>
+<p>Remplissez le formulaire ci-dessous pour télécharger gratuitement votre guide complet.</p>
+</div>
+<div class="form-grid">
+<div class="form-group">
+<label for="prenom">Prénom</label>
+<input type="text" id="prenom" placeholder="Votre prénom" />
+</div>
+<div class="form-group">
+<label for="nom">Nom</label>
+<input type="text" id="nom" placeholder="Votre nom" />
+</div>
+<div class="form-group">
+<label for="email">E-mail</label>
+<input type="email" id="email" placeholder="votre@email.com" />
+</div>
+<div class="form-group">
+<label for="tel">Téléphone</label>
+<input type="tel" id="tel" placeholder="06 00 00 00 00" />
+</div>
+<div class="form-group full">
+<label for="cp">Code postal</label>
+<input type="text" id="cp" placeholder="75000" maxlength="5" />
+</div>
+</div>
+<div class="form-submit">
+<button class="submit-btn" id="submit-btn" onclick="handleSubmit()">
+Télécharger gratuitement
+</button>
+<p class="form-note">🔒 Vos données sont confidentielles et ne seront jamais partagées.</p>
+</div>
+</div>
 
-    <div id="form-container">
-      <div class="form-header">
-        <span class="tag">Accès gratuit &amp; immédiat</span>
-        <h2>Recevez votre e-book</h2>
-        <p>Remplissez le formulaire ci-dessous pour télécharger gratuitement votre guide complet sur les huiles essentielles.</p>
-      </div>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="prenom">Prénom</label>
-          <input type="text" id="prenom" placeholder="Votre prénom" required />
-        </div>
-        <div class="form-group">
-          <label for="nom">Nom</label>
-          <input type="text" id="nom" placeholder="Votre nom" required />
-        </div>
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" placeholder="votre@email.com" required />
-        </div>
-        <div class="form-group">
-          <label for="tel">Téléphone</label>
-          <input type="tel" id="tel" placeholder="06 00 00 00 00" required />
-        </div>
-        <div class="form-group full">
-          <label for="cp">Code postal</label>
-          <input type="text" id="cp" placeholder="75000" maxlength="5" required />
-        </div>
-      </div>
-
-      <div class="form-submit">
-        <button class="submit-btn" onclick="handleSubmit()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-          Télécharger gratuitement
-        </button>
-        <p class="form-note">🔒 Vos données sont confidentielles et ne seront jamais partagées.</p>
-      </div>
-    </div>
-
-    <div class="thank-you" id="thank-you">
-      <div class="check">🌿</div>
-      <h3>Merci, c'est tout bon !</h3>
-      <p>Votre e-book <em>Douceur &amp; Vitalité</em> est en route. Vérifiez votre boîte mail (et vos spams 😉).<br><br>Avec douceur et éclat,<br><strong>Cocoon &amp; Belleza</strong></p>
-    </div>
-
-  </div>
+<div class="thank-you" id="thank-you">
+<div class="check">🌿</div>
+<h3>Merci, c'est tout bon !</h3>
+<p>Votre e-book <em>Douceur &amp; Vitalité</em> est en route.<br><br>Avec douceur et éclat,<br><strong>Cocoon &amp; Belleza</strong></p>
+</div>
+</div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer>
-  <span>@cocoon.x.belleza13</span> · Beauté naturelle · Huiles essentielles · Maderothérapie
+<span>@cocoon.x.belleza13</span> · Beauté naturelle · Huiles essentielles · Maderothérapie
 </footer>
 
 <script>
-  function handleSubmit() {
-    const prenom = document.getElementById('prenom').value.trim();
-    const nom    = document.getElementById('nom').value.trim();
-    const email  = document.getElementById('email').value.trim();
-    const tel    = document.getElementById('tel').value.trim();
-    const cp     = document.getElementById('cp').value.trim();
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAZaugOyXehxQdLHd2Spv8GC_IZxescgFuW4pHJ-gt8wmGJGqG8l3TGmG5mvSkU2vK/exec';
 
-    if (!prenom || !nom || !email || !tel || !cp) {
-      alert('Merci de remplir tous les champs 🌿');
-      return;
-    }
-    if (!email.includes('@')) {
-      alert('Veuillez entrer un e-mail valide.');
-      return;
-    }
+function handleSubmit() {
+var prenom = document.getElementById('prenom').value.trim();
+var nom = document.getElementById('nom').value.trim();
+var email = document.getElementById('email').value.trim();
+var tel = document.getElementById('tel').value.trim();
+var cp = document.getElementById('cp').value.trim();
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzAZaugOyXehxQdLHd2Spv8GC_IZxescgFuW4pHJ-gt8wmGJGqG8l3TGmG5mvSkU2vK/exec';
+if (!prenom || !nom || !email || !tel || !cp) {
+alert('Merci de remplir tous les champs.');
+return;
+}
+if (email.indexOf('@') === -1) {
+alert('Veuillez entrer un e-mail valide.');
+return;
+}
 
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors'
-      body: JSON.stringify({ prenom, nom, email, tel, cp }),
-    });
+var btn = document.getElementById('submit-btn');
+btn.disabled = true;
+btn.innerText = 'Envoi en cours...';
 
-    document.getElementById('form-container').style.display = 'none';
-    const ty = document.getElementById('thank-you');
-    ty.classList.add('show');
-    ty.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  
+var formData = new FormData();
+formData.append('prenom', prenom);
+formData.append('nom', nom);
+formData.append('email', email);
+formData.append('tel', tel);
+formData.append('cp', cp);
 
-  // Smooth scroll pour le bouton hero
-  document.querySelector('.cta-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('#formulaire').scrollIntoView({ behavior: 'smooth' });
-  });
+fetch(SCRIPT_URL, {
+method: 'POST',
+mode: 'no-cors',
+body: formData
+}).then(function() {
+afficherMerci();
+}).catch(function() {
+afficherMerci();
+});
+}
+
+function afficherMerci() {
+document.getElementById('form-container').style.display = 'none';
+var ty = document.getElementById('thank-you');
+ty.style.display = 'block';
+ty.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+document.querySelector('.cta-btn').addEventListener('click', function(e) {
+e.preventDefault();
+document.querySelector('#formulaire').scrollIntoView({ behavior: 'smooth' });
+});
 </script>
 
 </body>
